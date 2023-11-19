@@ -17,16 +17,17 @@ module.exports = route;
 
 //Controller Usuario
 route.get("/usuarios", controllerUsuario.getUsuarios);
-route.get("/usuarios/:id", controllerUsuario.getUsuarioById);
-route.post("/usuarios", controllerUsuario.postComentario);
-route.put("/usuarios/:id", controllerUsuario.putComentario);
-route.get("/usuarios/:id", controllerUsuario.deleteComentario);
+route.get("/usuarios/:nome", controllerUsuario.getUsuarioByName);
+//falta listagem por numero de curtida
+route.post("/usuarios", controllerUsuario.postUsuario);
+route.put("/usuarios/:id", controllerUsuario.putUsuario);
+route.get("/usuarios/:id", controllerUsuario.deleteUsuario);
 
 //Controller Postagem
 route.get("/postagens", controllerPostagem.getPostagens);
-route.get("/postagens/:id", controllerPostagem.getPostagemById);
+//falta listagem por usuario
 route.post("/postagens", controllerPostagem.postPostagem);
-route.put("/postagens/:id", controllerPostagem.putPostagem);
+route.put("/postagens/:id", controllerPostagem.putPostagem); //editar não tava nos requisitos
 route.get("/postagens/:id", controllerPostagem.deletePostagem);
 
 

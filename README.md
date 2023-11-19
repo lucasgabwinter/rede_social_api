@@ -13,9 +13,9 @@
 - Postagem
     - cadastrar
     - deletar
-    * deve estar vinculada a um unico usuario
     * deve ser possivel consultar todas as postagens feitas por um determinado usuario
-    * deve ser possivel curtir postagens
+    * deve ser possivel curtir postagens (acho que deve ser um boolean opnicional no model, e a curtida é uma edição dele pra true)
+    * deve estar vinculada a um unico usuario
 
 - Comentarios
     - cadastrar e apagar comentarios pra cada postagem
