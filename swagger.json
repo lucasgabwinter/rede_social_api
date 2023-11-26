@@ -1,0 +1,132 @@
+{
+    "openapi": "3.0.0", 
+    "info": {
+        "title": "Rede social para simplificada",
+        "description": "API para uma rede social simplificada",
+        "contact": {
+            "email": [
+                "gabriella.2021@alunos.utfpr.edu.br",
+                "lucas???@alunos.utfpr.edu.br"
+            ],
+            "name": [
+                "Gabriella Marreto Rodrigues",
+                "Lucas ?"
+            ]
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http//localhost:3000",
+            "description": "Servidor Local"
+        }
+    ],
+    "paths": {
+        "/postagens": {
+            "get": {
+                "summary": "Obter todas as postagens",
+                "tags": ["Postagens"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de postagens",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "conteudo": "postagem 1"
+                                    },
+                                    {
+                                        "conteudo": "postagem 2"
+                                    },
+                                    {
+                                        "conteudo": "postagem 3"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Criar uma nova postagem",
+                "tags": ["Postagens"],
+                "requestBody": {
+                    "description": "Noma tarefa",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "conteudo": "Conteúdo da postagem"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Postagem criada com sucesso",
+                        "tags": ["Postagens"],
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "conteudo": "Conteúdo da postagem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/postagens/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "put": {
+                "summary": "Atualizar uma tarefa por ID",
+                "tags": ["Tasks"],
+                "requestBody": {
+                    "description": "Tarefa atualizada",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "conteudo": "Novo conteúdo da postagem"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Postagem atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "conteudo": "Novo conteúdo da postagem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Postagem não encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Postagem"],
+                "summary": "Excluir uma postagem por ID",
+                "responses": {
+                    "204": {
+                        "description": "Postagem excluída com sucesso"
+                    },
+                    "404": {
+                        "description": "Postagem não encontrada"    
+                    }
+                }
+            }
+        }
+    }
+}
