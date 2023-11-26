@@ -27,8 +27,8 @@ route.get("/usuarios/:id", controllerUsuario.deleteUsuario); */
 route.get("/postagens", controllerPostagem.getPostagens);
 //falta listagem por usuario
 route.post("/postagens", controllerPostagem.postPostagem);
-//route.put("/postagens/:id", controllerPostagem.putPostagem); //editar não tava nos requisitos
-//route.get("/postagens/:id", controllerPostagem.deletePostagem);
+route.put("/postagens/:id", controllerPostagem.putPostagem); //editar não tava nos requisitos
+route.delete("/postagens/:id", controllerPostagem.deletePostagem);
 
 
 //Controller Comentario
