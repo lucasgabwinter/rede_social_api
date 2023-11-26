@@ -16,7 +16,7 @@ module.exports = {
     },
 
     async putPostagem(req, res) {
-        db.Postagem.update(req.body, { where: { id: req.params.id } })
+        db.Postagem.update(req.body, { where: { id: req.params.id }})
             .then((postagem) => {
                 if (postagem > 0) {
                     res.status(200).json(postagem)
@@ -33,7 +33,6 @@ module.exports = {
                     res.status(204).send(); // No content
                 } else {
                     res.status(404).json({ 'error': 'não pode excluir a postagem' })
-                    console.error();
                 }
             })
     }
