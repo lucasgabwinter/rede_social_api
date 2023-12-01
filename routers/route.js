@@ -29,6 +29,7 @@ route.get("/postagens", controllerPostagem.getPostagens);
 route.post("/postagens", controllerPostagem.postPostagem);
 route.put("/postagens/:id", controllerPostagem.putPostagem); //editar não tava nos requisitos
 route.delete("/postagens/:id", controllerPostagem.deletePostagem);
+route.patch("/postagens/:id", controllerPostagem.patchPostagem);
 
 
 //Controller Comentario

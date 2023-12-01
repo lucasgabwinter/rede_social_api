@@ -35,14 +35,26 @@ module.exports = {
                     res.status(404).json({ 'error': 'não pode excluir a postagem' })
                 }
             })
-    }
+    },
 
+    async patchPostagem(req, res) {
+        try {
+            const postId = req.params.id;
+            const postagem = await db.Postagem.findByPk(postId);
+    
+            if (!postagem) {
+                return res.status(404).json({ erro: 'Postagem não encontrada.' });
+            }
+    
+            await postagem.increment('curtida');
+            return res.status(200).json({ mensagem: 'Curtida adicionada com sucesso.' });
+        } catch (erro) {
+            console.error('Erro ao adicionar curtida:', erro);
+            return res.status(500).json({ erro: 'Erro interno do servidor.' });
+        }
+    }
+    
 
 }
-
-
-
-
-
 
 

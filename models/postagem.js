@@ -16,9 +16,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         curtida:{
-            type: Sequelize.BOOLEAN,
-            defaultValue: false
+            type: Sequelize.INTEGER,
+            defaultValue: 0
         }
     });
     return Postagem;
 }
+
+

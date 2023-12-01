@@ -88,7 +88,7 @@
             ],
             "put": {
                 "summary": "Atualizar uma tarefa por ID",
-                "tags": ["Tasks"],
+                "tags": ["Postagens"],
                 "requestBody": {
                     "description": "Tarefa atualizada",
                     "content": {
@@ -116,7 +116,7 @@
                 }
             },
             "delete": {
-                "tags": ["Postagem"],
+                "tags": ["Postagens"],
                 "summary": "Excluir uma postagem por ID",
                 "responses": {
                     "204": {
