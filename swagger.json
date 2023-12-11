@@ -1,16 +1,16 @@
 {
     "openapi": "3.0.0", 
     "info": {
-        "title": "Rede social para simplificada",
+        "title": "Rede social simplificada",
         "description": "API para uma rede social simplificada",
         "contact": {
             "email": [
                 "gabriella.2021@alunos.utfpr.edu.br",
-                "lucas???@alunos.utfpr.edu.br"
+                "lucaswinter@alunos.utfpr.edu.br"
             ],
             "name": [
                 "Gabriella Marreto Rodrigues",
-                "Lucas ?"
+                "Lucas Gabriel Winter"
             ]
         },
         "version": "1.0.0"
@@ -22,75 +22,262 @@
         }
     ],
     "paths": {
-        "/postagens": {
+      "/postagens/{postagemId}/comentarios": {
             "get": {
-                "summary": "Obter todas as postagens",
-                "tags": ["Postagens"],
+                "summary": "Obter todos os comentários de uma postagem",
+                "tags": ["Comentários"],
+                "parameters": [
+                    {
+                        "name": "postagemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da postagem"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Lista de postagens",
+                        "description": "Lista de comentários",
                         "content": {
                             "application/json": {
                                 "example": [
                                     {
-                                        "conteudo": "postagem 1"
+                                        "id": 1,
+                                        "conteudo": "Comentário 1"
                                     },
                                     {
-                                        "conteudo": "postagem 2"
-                                    },
-                                    {
-                                        "conteudo": "postagem 3"
+                                        "id": 2,
+                                        "conteudo": "Comentário 2"
                                     }
                                 ]
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Postagem não encontrada"
                     }
                 }
             },
             "post": {
-                "summary": "Criar uma nova postagem",
-                "tags": ["Postagens"],
+                "summary": "Criar um novo comentário",
+                "tags": ["Comentários"],
+                "parameters": [
+                    {
+                        "name": "postagemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da postagem"
+                    }
+                ],
                 "requestBody": {
-                    "description": "Noma tarefa",
+                    "description": "Corpo da requisição para criar um comentário",
                     "content": {
                         "application/json": {
                             "example": {
-                                "conteudo": "Conteúdo da postagem"
+                                "conteudo": "Conteúdo do comentário"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Postagem criada com sucesso",
-                        "tags": ["Postagens"],
+                        "description": "Comentário criado com sucesso",
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "conteudo": "Conteúdo da postagem"
+                                    "id": 3,
+                                    "conteudo": "Conteúdo do comentário"
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Postagem não encontrada"
+                    }
+                }
+            }
+        },
+        "/comentarios/{id}": {
+            "get": {
+                "summary": "Obter um comentário por ID",
+                "tags": ["Comentários"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID do comentário"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comentário encontrado",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 3,
+                                    "conteudo": "Conteúdo do comentário"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comentário não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualizar um comentário por ID",
+                "tags": ["Comentários"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID do comentário"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Corpo da requisição para atualizar um comentário",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "conteudo": "Novo conteúdo do comentário"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Comentário atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 3,
+                                    "conteudo": "Novo conteúdo do comentário"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comentário não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Excluir um comentário por ID",
+                "tags": ["Comentários"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID do comentário"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Comentário excluído com sucesso"
+                    },
+                    "404": {
+                        "description": "Comentário não encontrado"
+                    }
+                }
+            }
+        },
+        "/maisCurtidos": {
+            "get": {
+                "summary": "Obter a contagem de curtidas por destinatário",
+                "tags": ["Curtidas"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de destinatários mais curtidos",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "destinatarioId": 1,
+                                        "totalCurtidas": 10,
+                                        "loginDestinatario": "usuario1"
+                                    },
+                                    {
+                                        "destinatarioId": 2,
+                                        "totalCurtidas": 8,
+                                        "loginDestinatario": "usuario2"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor"
                     }
                 }
             }
         },
         "/postagens/{id}": {
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "integer"
+            "get": {
+                "summary": "Obter uma postagem por ID",
+                "tags": ["Postagens"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da postagem"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Postagem encontrada",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "conteudo": "Conteúdo da postagem",
+                                    "usuarioId": 1
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Postagem não encontrada"
                     }
                 }
-            ],
+            },
             "put": {
-                "summary": "Atualizar uma tarefa por ID",
+                "summary": "Atualizar uma postagem por ID",
                 "tags": ["Postagens"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da postagem"
+                    }
+                ],
                 "requestBody": {
-                    "description": "Tarefa atualizada",
+                    "description": "Corpo da requisição para atualizar uma postagem",
                     "content": {
                         "application/json": {
                             "example": {
@@ -105,7 +292,9 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "conteudo": "Novo conteúdo da postagem"
+                                    "id": 1,
+                                    "conteudo": "Novo conteúdo da postagem",
+                                    "usuarioId": 1
                                 }
                             }
                         }
@@ -116,17 +305,322 @@
                 }
             },
             "delete": {
-                "tags": ["Postagens"],
                 "summary": "Excluir uma postagem por ID",
+                "tags": ["Postagens"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da postagem"
+                    }
+                ],
                 "responses": {
                     "204": {
                         "description": "Postagem excluída com sucesso"
                     },
                     "404": {
-                        "description": "Postagem não encontrada"    
+                        "description": "Postagem não encontrada"
+                    }
+                }
+            }
+        },
+        "/usuarios/{usuarioId}/postagens": {
+            "get": {
+                "summary": "Obter postagens de um usuário",
+                "tags": ["Postagens"],
+                "parameters": [
+                    {
+                        "name": "usuarioId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID do usuário"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de postagens do usuário",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "conteudo": "Conteúdo da postagem",
+                                        "usuarioId": 1
+                                    },
+                                    {
+                                        "id": 2,
+                                        "conteudo": "Outro conteúdo da postagem",
+                                        "usuarioId": 1
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Criar uma nova postagem para um usuário",
+                "tags": ["Postagens"],
+                "parameters": [
+                    {
+                        "name": "usuarioId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID do usuário"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Corpo da requisição para criar uma postagem",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "conteudo": "Conteúdo da nova postagem"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Postagem criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 3,
+                                    "conteudo": "Conteúdo da nova postagem",
+                                    "usuarioId": 1
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    }
+                }
+            }
+        },
+        "/postagens/{id}/curtir/{usuarioId}": {
+            "patch": {
+                "summary": "Adicionar curtida a uma postagem",
+                "tags": ["Curtidas"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID da postagem"
+                    },
+                    {
+                        "name": "usuarioId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "ID do usuário"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Curtida adicionada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "mensagem": "Curtida adicionada com sucesso."
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário já curtiu esta postagem"
+                    },
+                    "404": {
+                        "description": "Postagem ou usuário não encontrados"
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor"
+                    }
+                }
+            }
+        },
+        "/usuarios": {
+            "get": {
+                "summary": "Obter todos os usuários",
+                "tags": ["Usuários"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários",
+                        "content": {
+                            "application/json": {
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "login": "usuario1",
+                                        "nome": "Nome do Usuário 1"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "login": "usuario2",
+                                        "nome": "Nome do Usuário 2"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Criar um novo usuário",
+                "tags": ["Usuários"],
+                "requestBody": {
+                    "description": "Corpo da requisição para criar um usuário",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "login": "novousuario",
+                                "nome": "Novo Usuário"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 3,
+                                    "login": "novousuario",
+                                    "nome": "Novo Usuário"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/{login}": {
+            "get": {
+                "summary": "Obter um usuário por login",
+                "tags": ["Usuários"],
+                "parameters": [
+                    {
+                        "name": "login",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Login do usuário"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário encontrado",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "login": "usuario1",
+                                    "nome": "Nome do Usuário 1"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualizar um usuário por login",
+                "tags": ["Usuários"],
+                "parameters": [
+                    {
+                        "name": "login",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Login do usuário"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Corpo da requisição para atualizar um usuário",
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "nome": "Novo Nome do Usuário"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "id": 1,
+                                    "login": "usuario1",
+                                    "nome": "Novo Nome do Usuário"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Excluir um usuário por login",
+                "tags": ["Usuários"],
+                "parameters": [
+                    {
+                        "name": "login",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Login do usuário"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário excluído com sucesso",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "concluído": "Usuário excluido com sucesso"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado"
                     }
                 }
             }
         }
     }
+    
+
 }
