@@ -3,9 +3,9 @@ const { Usuario } = require("../config/db_sequelize");
 module.exports = (sequelize, Sequelize) => {
     const Usuario = sequelize.define('usuario', {
         id: {
-            type:Sequelize.INTEGER,
-            autoIncrement: true, 
-            allNull: false, 
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            allNull: false,
             primaryKey: true
         },
         login: {

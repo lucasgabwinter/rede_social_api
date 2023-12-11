@@ -1,42 +1,51 @@
 const express = require('express');;
 const db = require('../config/db_sequelize');
 
-/* const controllerUsuario = require('../controllers/controllerUsuario'); */
+const controllerUsuario = require('../controllers/controllerUsuario');
 const controllerComentario = require('../controllers/controllerComentario');
-const controllerPostagem = require ('../controllers/controllerPostagem');
+const controllerPostagem = require('../controllers/controllerPostagem');
+const controllerCurtida = require('../controllers/controllerCurtida');
 
 const route = express.Router();
 
-db.sequelize.sync({force: true}).then(() => {
-    console.log('{ force: true }');
+// Associações dos modelos
+Object.values(db).forEach(model => {
+    if (model.associate) {
+        model.associate(db);
+    }
 });
 
-//db.Usuario.create({login: 'admin', senha: '1234', tipo:1});
-
+db.sequelize.sync({ force: true }).then(() => {
+    console.log('{ force: true }');
+    db.Usuario.create({ login: 'lucas', senha: '1234' });
+    db.Usuario.create({ login: 'gabriella', senha: '1234' });
+});
 module.exports = route;
 
+
 //Controller Usuario
-/* route.get("/usuarios", controllerUsuario.getUsuarios);
-route.get("/usuarios/:nome", controllerUsuario.getUsuarioByName); */
-//falta listagem por numero de curtida
-/* route.post("/usuarios", controllerUsuario.postUsuario);
+route.get("/usuarios", controllerUsuario.getUsuarios);
+route.get("/usuarios/:login", controllerUsuario.getUsuarioByLogin);
+route.post("/usuarios", controllerUsuario.postUsuario);
 route.put("/usuarios/:id", controllerUsuario.putUsuario);
-route.get("/usuarios/:id", controllerUsuario.deleteUsuario); */
+route.delete("/usuarios/:login", controllerUsuario.deleteUsuario);
 
 //Controller Postagem
-route.get("/postagens", controllerPostagem.getPostagens);
-//falta listagem por usuario
-route.post("/postagens", controllerPostagem.postPostagem);
+route.get("/postagens/:id", controllerPostagem.getPostagemById);
+route.get("/postagens/porUsuario/:usuarioId", controllerPostagem.getPostagensByUser);
+route.post("/postagens/:usuarioId", controllerPostagem.postPostagem);
 route.put("/postagens/:id", controllerPostagem.putPostagem); //editar não tava nos requisitos
 route.delete("/postagens/:id", controllerPostagem.deletePostagem);
-route.patch("/postagens/:id", controllerPostagem.patchPostagem);
+route.patch("/postagens/:id/curtidoPor/:usuarioId", controllerPostagem.patchPostagem);
 
 
 //Controller Comentario
-route.get("/comentarios", controllerComentario.getComentarios);
 route.get("/comentarios/:id", controllerComentario.getComentarioById);
-route.post("/comentarios", controllerComentario.postComentario);
+route.get("/comentarios/porPostagem/:postagemId", controllerComentario.getComentariosByPostagem);
+route.post("/comentarios/:postagemId", controllerComentario.postComentario);
 route.put("/comentarios/:id", controllerComentario.putComentario);
 route.delete("/comentarios/:id", controllerComentario.deleteComentario);
 
-//-------------------------------------------------------------------------
+//Controller Curtidas
+route.get("/curtidas/mais-curtidos", controllerCurtida.getMaisCurtidos);
+

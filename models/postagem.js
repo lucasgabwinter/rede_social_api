@@ -1,25 +1,27 @@
 module.exports = (sequelize, Sequelize) => {
     const Postagem = sequelize.define('postagem', {
         id: {
-            type:Sequelize.INTEGER,
-            autoIncrement: true, 
-            allNull: false, 
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            allNull: false,
             primaryKey: true
         },
         conteudo: {
-            type: Sequelize.STRING, 
+            type: Sequelize.STRING,
             allowNull: false
         },
-        horario:{
-            type: Sequelize.DATE,
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        usuarioId: {
+            type: Sequelize.INTEGER,
             allowNull: false
         },
-        curtida:{
+        totalCurtidas: {
             type: Sequelize.INTEGER,
             defaultValue: 0
         }
     });
+    Postagem.associate = (models) => {
+        Postagem.hasMany(models.Curtida, { foreignKey: 'postagemId', as: 'Curtidas' });
+    };
     return Postagem;
 }
 

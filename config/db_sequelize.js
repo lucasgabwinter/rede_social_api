@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('trab2', 'postgres', 'root',
+const sequelize = new Sequelize('trab2', 'postgres', '1234',
         { host: 'localhost', dialect: 'postgres' });
 
 var db = {};
@@ -14,9 +14,29 @@ db.Postagem = require('../models/postagem.js')
 db.Comentario = require('../models/comentario.js')
         (sequelize, Sequelize);
 
-//falta fazer os relacionamentos aqui:
+db.Curtida = require('../models/curtida.js')
+        (sequelize, Sequelize);
+
 db.Postagem.hasMany(db.Comentario, {
         foreignKey: 'postagemId',
+        onDelete: 'NO ACTION'
+});
+db.Usuario.hasMany(db.Postagem, {
+        foreignKey: 'usuarioId',
+        onDelete: 'NO ACTION'
+});
+db.Postagem.hasMany(db.Curtida, {
+        foreignKey: 'postagemId',
+        onDelete: 'NO ACTION'
+});
+db.Usuario.hasMany(db.Curtida, {
+        foreignKey: 'remetenteId',
+        as: 'CurtidasEnviadas',
+        onDelete: 'NO ACTION'
+});
+db.Usuario.hasMany(db.Curtida, {
+        foreignKey: 'destinatarioId',
+        as: 'CurtidasRecebidas',
         onDelete: 'NO ACTION'
 });
 

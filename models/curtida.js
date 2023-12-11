@@ -1,13 +1,17 @@
 module.exports = (sequelize, Sequelize) => {
-    const Comentario = sequelize.define('comentario', {
+    const Curtida = sequelize.define('curtida', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
-            allNull: false,
+            allowNull: false,
             primaryKey: true
         },
-        conteudo: {
-            type: Sequelize.STRING,
+        remetenteId: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        destinatarioId: {
+            type: Sequelize.INTEGER,
             allowNull: false
         },
         postagemId: {
@@ -15,5 +19,5 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         }
     });
-    return Comentario;
+    return Curtida;
 }
